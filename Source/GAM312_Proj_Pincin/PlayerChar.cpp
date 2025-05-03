@@ -35,6 +35,11 @@ void APlayerChar::BeginPlay()
 	FTimerHandle StatsTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(StatsTimerHandle, this, &APlayerChar::DecreaseStats, 2.0f, true);
 	// sets the time for the players stats to decrease and recover for stamina hunger and health
+	if (objWidget)
+	{
+		objWidget->UpdatebuildObj(0.0f);
+		objWidget->UpdatematOBJ(0.0f);
+	}
 }
 
 // Called every frame
@@ -143,7 +148,9 @@ void APlayerChar::FindObject()
 					{
 						GiveResource(resourceValue, hitName);
 						// gives you the resource that is in the viewport being hit
+						matsCollected = matsCollected + resourceValue;
 
+						objWidget->UpdatematOBJ(matsCollected);
 						check(GEngine != nullptr);
 						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected"));
 						// notifies you each time you hit the resource that it has been collected
@@ -167,9 +174,13 @@ void APlayerChar::FindObject()
 	else
 	{
 		isBuilding = false;
-		
+		objectsBuilt = objectsBuilt + 1.0f;
 
-	}
+		objWidget->UpdatebuildObj(objectsBuilt);
+
+		objectsBuilt = objectsBuilt + 1.0f;
+
+		objWidget->UpdatebuildObj(objectsBuilt);
 }
 void APlayerChar::SetHealth(float amount)
 {

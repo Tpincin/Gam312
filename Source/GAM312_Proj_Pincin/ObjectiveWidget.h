@@ -13,5 +13,11 @@ UCLASS()
 class GAM312_PROJ_PINCIN_API UObjectiveWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
+public:
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdatematOBJ(float matsCollected);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdatebuildObj(float objectsBuilt);
 };
